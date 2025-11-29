@@ -352,6 +352,9 @@ async def get_feature_importance(
     try:
         df = data_cache['feature_importance'].copy()
         
+        # Standardize column names to lowercase
+        df.columns = df.columns.str.lower()
+        
         # Sort by importance
         df = df.sort_values('importance', ascending=False)
         
