@@ -257,7 +257,8 @@ async def get_country_data(
         if end_year:
             country_data = country_data[country_data['year'] <= end_year]
         
-        # Convert to dictionary format
+        # Convert to dictionary format (replace NaN with None for JSON compliance)
+        country_data = country_data.replace({np.nan: None})
         records = country_data.to_dict('records')
         
         return {
@@ -298,6 +299,8 @@ async def get_risk_scores(
         # Sort by risk score descending
         df = df.sort_values('risk_score', ascending=False)
         
+        # Replace NaN with None for JSON compliance
+        df = df.replace({np.nan: None})
         records = df.to_dict('records')
         
         return {
@@ -321,7 +324,9 @@ async def get_model_performance():
         # Group by model for cleaner output
         models_list = []
         for model_name in df['model'].unique():
-            model_data = df[df['model'] == model_name].to_dict('records')
+            model_subset = df[df['model'] == model_name].copy()
+            model_subset = model_subset.replace({np.nan: None})
+            model_data = model_subset.to_dict('records')
             models_list.append({
                 "model": model_name,
                 "metrics": model_data
@@ -354,6 +359,8 @@ async def get_feature_importance(
         if top_n:
             df = df.head(top_n)
         
+        # Replace NaN with None for JSON compliance
+        df = df.replace({np.nan: None})
         records = df.to_dict('records')
         
         return {
@@ -382,6 +389,8 @@ async def get_fiscal_metrics(
             if df.empty:
                 raise HTTPException(status_code=404, detail=f"No fiscal data found for '{country}'")
         
+        # Replace NaN with None for JSON compliance
+        df = df.replace({np.nan: None})
         records = df.to_dict('records')
         
         return {
@@ -407,6 +416,8 @@ async def get_fiscal_scorecard():
         # Sort by fiscal stress score descending (highest stress first)
         df = df.sort_values('fiscal_stress_score', ascending=False)
         
+        # Replace NaN with None for JSON compliance
+        df = df.replace({np.nan: None})
         records = df.to_dict('records')
         
         return {
@@ -436,7 +447,8 @@ async def get_debt_projections(country: str):
         # Organize by scenario
         scenarios = {}
         for scenario in country_projections['scenario'].unique():
-            scenario_data = country_projections[country_projections['scenario'] == scenario]
+            scenario_data = country_projections[country_projections['scenario'] == scenario].copy()
+            scenario_data = scenario_data.replace({np.nan: None})
             scenarios[scenario] = scenario_data.to_dict('records')
         
         return {
@@ -461,6 +473,12 @@ async def get_summary_statistics():
         panel_data = data_cache['panel_data']
         risk_scores = data_cache['risk_scores']
         
+        # Calculate means with NaN handling
+        avg_risk = risk_scores['risk_score'].mean()
+        avg_debt = panel_data.get('debt_to_gdp', pd.Series([0])).mean()
+        avg_deficit = panel_data.get('deficit_to_gdp', pd.Series([0])).mean()
+        avg_revenue = panel_data.get('revenue_to_gdp', pd.Series([0])).mean()
+        
         return {
             "dataset": {
                 "total_observations": len(panel_data),
@@ -474,12 +492,12 @@ async def get_summary_statistics():
                 "high_risk": int((risk_scores['risk_score'] >= 60).sum()),
                 "medium_risk": int(((risk_scores['risk_score'] >= 30) & (risk_scores['risk_score'] < 60)).sum()),
                 "low_risk": int((risk_scores['risk_score'] < 30).sum()),
-                "average_risk": float(risk_scores['risk_score'].mean())
+                "average_risk": float(avg_risk) if not pd.isna(avg_risk) else None
             },
             "fiscal_indicators": {
-                "avg_debt_to_gdp": float(panel_data['debt_to_gdp'].mean()),
-                "avg_deficit_to_gdp": float(panel_data['deficit_to_gdp'].mean()),
-                "avg_revenue_to_gdp": float(panel_data['revenue_to_gdp'].mean())
+                "avg_debt_to_gdp": float(avg_debt) if not pd.isna(avg_debt) else None,
+                "avg_deficit_to_gdp": float(avg_deficit) if not pd.isna(avg_deficit) else None,
+                "avg_revenue_to_gdp": float(avg_revenue) if not pd.isna(avg_revenue) else None
             }
         }
         
