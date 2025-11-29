@@ -1,0 +1,15 @@
+country,Avg_Risk_Score,Risk_Volatility,Max_Risk_Score,Actual_Crisis_Rate
+Nigeria,98.52,1.22,99.59,0.83
+Egypt,98.16,2.47,99.82,0.67
+Togo,51.7,38.65,98.23,0.67
+Ivory Coast,48.63,49.79,96.01,0.5
+Senegal,1.12,1.03,2.16,0.5
+Rwanda,0.98,1.32,2.76,0.5
+Kenya,0.52,0.97,2.43,0.0
+Ghana,0.05,0.02,0.09,0.0
+Ethiopia,0.04,0.01,0.05,0.0
+Tanzania,0.03,0.0,0.03,0.0
+Algeria,0.02,0.0,0.02,0.0
+Angola,0.02,0.0,0.02,0.0
+South Africa,0.02,0.0,0.03,0.17
+Botswana,0.01,0.0,0.01,0.0

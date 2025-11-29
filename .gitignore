@@ -13,10 +13,10 @@ dist/
 *.egg-info/
 .ipynb_checkpoints/
 
-# Data
-*.xlsx
-*.xls
-*.csv
+# Data (commented out for deployment - data needed in production)
+# *.xlsx
+# *.xls
+# *.csv
 !data/README.md
 
 # Models (commented out for deployment - models needed in production)

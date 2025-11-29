@@ -1,0 +1,16 @@
+year_ahead,scenario,debt_to_gdp,country
+1,baseline,50.21,Togo
+2,baseline,51.32,Togo
+3,baseline,52.46,Togo
+4,baseline,53.62,Togo
+5,baseline,54.81,Togo
+1,optimistic,49.23,Togo
+2,optimistic,49.33,Togo
+3,optimistic,49.44,Togo
+4,optimistic,49.54,Togo
+5,optimistic,49.65,Togo
+1,stress,51.2,Togo
+2,stress,53.35,Togo
+3,stress,55.6,Togo
+4,stress,57.94,Togo
+5,stress,60.38,Togo
