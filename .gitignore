@@ -19,10 +19,10 @@ dist/
 *.csv
 !data/README.md
 
-# Models
-models/*.pkl
-models/*.joblib
-models/*.h5
+# Models (commented out for deployment - models needed in production)
+# models/*.pkl
+# models/*.joblib
+# models/*.h5
 
 # IDE
 .vscode/
