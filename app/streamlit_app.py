@@ -37,6 +37,25 @@ def get_theme_css(theme):
             [data-testid="stSidebar"] {
                 background-color: #262730;
             }
+            [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p {
+                color: #fafafa !important;
+            }
+            [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, 
+            [data-testid="stSidebar"] h3, [data-testid="stSidebar"] h4 {
+                color: #ffffff !important;
+            }
+            [data-testid="stSidebar"] .stRadio label {
+                color: #fafafa !important;
+            }
+            [data-testid="stSidebar"] .stButton button {
+                color: #fafafa !important;
+                background-color: #1c1e26;
+                border: 1px solid #58a6ff;
+            }
+            [data-testid="stSidebar"] .stButton button:hover {
+                background-color: #2d3139;
+                border-color: #79c0ff;
+            }
             [data-testid="stHeader"] {
                 background-color: #0e1117;
             }
